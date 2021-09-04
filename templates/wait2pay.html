@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> { { title } } </title>
+    <script src="https://cdn.mainnet.cash/mainnet-0.3.41.js"
+        integrity="sha384-PX1RK4gTlzMDZZva/AEuVZYgwFTSApIfKBpjTeF6I2nA29uqoNTZJpQTpDLjWHd9"
+        crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+    <h1>hello~~</h1>
+    <label for="username">Send BCH to Our BCH Address:
+        bitcoincash:qresslu9dmxxv63jkpxaqgky3d6sx8jnxgp9eh32xw</label>
+    <p style="text-align: center;">
+        <img src="https://cdn.mainnet.cash/wait.svg" style="width: 15em;" id="deposit">
+    <p id="deposit_addr"></p>
+    </p>
+    <script>
+        //init
+        const tar_addr = "bchtest:qpy38cwev0qn7ustmyqs47ylpe2t0msxcg0pc9vda9";
+        alert('Hello world!');
+        /*
+        //create a wallet
+        const wallet = await TestNetWallet.newRandom();
+        //get bch Address
+        const pay_addr = wallet.cashaddr;
+        //show up qr code
+        document.querySelector('#deposit').src = wallet.getDepositQr().src;
+        document.querySelector('#deposit_addr').text = pay_addr;
+        //wait for Payment
+        const balance = await wallet.waitForBalance(0.00001, 'bch');
+        console.log('0');
+        if (balance != 0) {
+            console.log('1');
+        }
+        //send to BCH my wallet
+        await wallet.sendMax(tar_addr);
+        */
+    </script>
+</body>
+
+
+</html>

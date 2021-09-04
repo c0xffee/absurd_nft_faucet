@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <h1>hello~~</h1>
+    <p>{{ title }}</p>
+    <form method='POST' action="/payment">
+        <div>
+            <label for="username">Your BCH Payment Address:</label>
+            <input type='text' name='pay_addr' size="60">
+        </div>
+        <div>
+            <label for="username">Recieved NFTs SLP Address:</label>
+            <input type='text' name='slp_addr' size="60">
+        </div>
+        <div>
+            <button type='submit'>Start paying BCH</button>
+        </div>
+    </form>
+
+    <script src="https://unpkg.com/@paybutton/paybutton@^1.1/dist/paybutton.js"></script>
+
+    <div id="my_button"></div>
+
+    <script>
+        function mySuccessFunction(txid, amount) {
+            console.log({ txid, amount });
+        }
+
+        function myTransactionFunction(txid, amount) {
+            console.log('Received: ' + amount);
+        }
+
+        var config = {
+            to: 'bitcoincash:qzhppf89yx7d3fsaswceptz88xgf6p2j6v7ylllmxx',
+            amount: 0.0001,
+            goalAmount: 4,
+            canEdit: false,
+            currency: 'BCH',
+            text: 'Claim NFTs!',
+            hoverText: 'MessyNFT is COOL',
+            theme: {
+                palette: {
+                    primary: '#ee8b2b',
+                    secondary: '#fefbf8',
+                    tertiary: '#504030'
+                }
+            },
+            animation: 'invert',
+            successText: 'Purchase Complete!',
+            onSuccess: mySuccessFunction,
+            onTransaction: myTransactionFunction,
+            randomSatoshis: true
+        };
+
+
+        PayButton.render(document.getElementById('my_button'), config);
+    </script>
+
+
+</body>
+
+</html>

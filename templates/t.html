@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <title>Mainnet</title>
+    <script src="https://cdn.mainnet.cash/mainnet-0.2.12.js"
+        integrity="sha384-CmrJoR+dx6a4cw3opshz5ssWp587n6VUyYD005vlGq2+UKgtfNhOil/wLgydN5E3"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/bchaddrjs-slp@0.2.12/dist/bchaddrjs-slp-0.2.12.min.js" integrity=""
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <h1>Hello there, this is mainnet test!</h1>
+
+    <script>
+        function pay_suc(buyer_slp, tx) {
+            alert("Payment Successful!!!");
+            window.location.href = "dbck?buyer_slp=" + buyer_slp + "&tx=" + tx;
+            $.post("/dbck", {
+                buyer_slp: buyer_slp,
+                tx: tx
+            },
+                function (data, status) {
+                    alert("data: \n" + data + "\nstatus: " + status);
+                });
+        }
+    </script>
+
+
+</body>
+
+
+<script type="module">
+
+
+
+
+
+
+
+    async function main() {
+        //const wallet = await TestNetWallet.newRandom();
+
+        const wallet = await TestNetWallet.named('user:1234');
+        console.log(wallet)
+        console.log(await wallet.getBalance('sat'))
+
+
+        const homeWallet = await TestNetWallet.watchOnly("bchtest:qpsd3ch8efx945h95wa3zt47z8q2xkr23svk95gj9c")
+        console.log(homeWallet)
+
+        console.log(await homeWallet.getBalance('sat'));
+
+
+        document.querySelector('#deposit').src = wallet.getDepositQr().src;
+
+
+        /*
+        const txid = await wallet.getTestnetSatoshis();
+        console.log(txid);
+        */
+
+
+        async function send(cashaddr) {
+            console.log(cashaddr)
+            const txData = await wallet.send([
+                [cashaddr, 100, 'sat'],
+            ]);
+
+
+            console.log("sending... tx: ", txData);
+            console.log("New Balance: " + await wallet.getBalance('sat'));
+
+        }
+
+
+        $("#send").click((event) => {
+
+            const cashaddr = $("#toCashaddr").val();
+            console.log(cashaddr);
+            if (bchaddr.isValidAddress(cashaddr)) {
+                console.log("valid!")
+
+                send(cashaddr);
+
+            } else {
+                console.log("invalid address!")
+            }
+
+        });
+
+
+    }
+
+
+    main();
+
+
+</script>
+
+
+</html>

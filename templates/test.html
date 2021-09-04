@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.mainnet.cash/mainnet-0.3.41.js"
+        integrity="sha384-PX1RK4gTlzMDZZva/AEuVZYgwFTSApIfKBpjTeF6I2nA29uqoNTZJpQTpDLjWHd9"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <span id="Check_Txt" style="color:red">時間計數：<span id="Check_i">180秒</span></span>
+
+    <p style="text-align: center;">
+        <img src="https://cdn.mainnet.cash/wait.svg" style="width: 15em;" id="deposit">
+
+    <div style="background-color:#FFAFFE;width:600px;height:40px;margin:0 auto;">
+        <div id="deposit_addr" style="line-height:40px;text-align:center;width:600px;height:40px;"></div>
+    </div>
+
+    <script>
+        var SetMinute = 180;
+        function timesup() {
+            alert("Payment Failed");
+            window.location.href = "home";
+        }
+        function pay_suc() {
+            alert("Payment Successful!!!");
+            window.location.href = "home";
+        }
+        function Check_Time() {
+            SetMinute -= 1;
+
+            var Check_i = document.getElementById("Check_i");
+
+            Check_i.innerHTML = SetMinute + "秒";
+            if (SetMinute <= 0) {
+                timesup()
+            }
+        }
+        var mm = window.setInterval("Check_Time()", 1000);
+        async function getnewwallet() {
+            const tar_addr = "bitcoincash:qzhppf89yx7d3fsaswceptz88xgf6p2j6v7ylllmxx"//"bchtest:qpy38cwev0qn7ustmyqs47ylpe2t0msxcg0pc9vda9";
+            //const wallet = await TestNetWallet.newRandom();
+            const wallet = await Wallet.newRandom();
+            document.querySelector('#deposit').src = wallet.getDepositQr().src;
+            document.getElementById("deposit_addr").innerHTML = wallet.cashaddr;
+            console.log(wallet.cashaddr);
+            console.log(tar_addr);
+            const balance = await wallet.waitForBalance(1000, 'sat');
+            console.log(balance);
+            var txData = await wallet.sendMax(tar_addr);
+            console.log(txData);
+            var bl = await wallet.getBalance();
+            console.log(bl.bch);
+            console.log('successful payment' + bl);
+            pay_suc()
+
+            return wallet;
+        }
+        getnewwallet()
+
+    </script>
+</body>
+
+</html>

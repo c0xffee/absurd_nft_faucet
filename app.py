@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num
+from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup
 import csv
 
 app = Flask(__name__)
@@ -92,6 +92,7 @@ def secret_door():
         return 'fuck you!'
     if headsha(secret) == '2de90e1b790a24893933e19268cfdcf887f1d4a500f99919ada5bd76c29c6ca5':
         update_finished_nft_num(tx, finish_num)
+        backup()
         return '%s %s NFTs FINISHED' % (tx, finish_num)
     else:
         return str(hash(secret))+secret

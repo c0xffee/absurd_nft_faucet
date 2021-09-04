@@ -3,6 +3,16 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import hashlib
 import csv
+import shutil
+import os
+
+
+def backup():
+    fname = 'all_payment.csv'
+    dir = 'backup'
+    new_name = datetime.now().isoformat().split('.')[
+        0].replace(':', '-')+'.csv'
+    shutil.copyfile(fname, dir+os.sep+new_name)
 
 
 def update_finished_nft_num(tx, num):

@@ -7,8 +7,8 @@
 
 <body>
     <h1>Payment Successful</h1>
-    <pre>{% for i in data %}
-        {{ i }}
+    <pre>{% for i in range(leng) %}
+        {{ schema[i] }} : {{ data[i] }}
         {% endfor %}</pre>
 </body>
 

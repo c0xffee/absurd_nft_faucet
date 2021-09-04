@@ -1,14 +1,46 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
+import hashlib
+import csv
 
 
-def clean_data(data):
+def update_finished_nft_num(tx, num):
+    fname = 'all_payment.csv'
+    r = csv.reader(open(fname))  # Here your csv file
+    lines = list(r)
+    print(lines)
+    for i in range(len(lines)):
+        if lines[i][0] == tx:
+            print(lines[i])
+            lines[i][-1] = str(num)
+    print(lines)
 
-    return data
+    writer = csv.writer(open(fname, 'w', newline=''))
+    writer.writerows(lines)
+
+
+def headsha(sth):
+    return hashlib.sha256(sth.encode('utf-8')).hexdigest()
+
+
+def chk_tx_exist(tx):
+    fname = 'all_payment.csv'
+    with open(fname, 'r') as f:
+        sth = f.read()
+    if tx in sth:
+        return True
+    else:
+        return False
 
 
 def update_data(data):
-    data = clean_data(data)
+    #data = clean_data(data)
+    #schema = 'web_slp_addr,web_tx_link,web_bch,web_bch_addr,chain_out_bch_addr,chain_in_bch_addr,chain_actually_pay,chain_actually_get,chain_gas,chain_tx_ago,chain_tx_datetime,verified_nft_amount'
+    fname = 'all_payment.csv'
+    sdata = ','.join([str(i) for i in data])
+    with open(fname, 'a+') as f:
+        f.write(sdata+'\n')
 
 
 def chk_slp_addr(slp_addr):
@@ -61,8 +93,10 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
     res = requests.get(url)
     out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date = beauti4(
         res)
+    tx_date = datetime.strptime(tx_date, "%b %d, %Y %I:%M %p").isoformat()[:-3]
 
     nft_num = int(actually_pay//nft_price)
+    tx_no = url.split('/')[-1]
     failed = ''
     log = ''
     if 'seconds' not in tx_ago:
@@ -80,7 +114,7 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
             failed = 1
     '''
 
-    return failed, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
+    return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
 
     # print(len(money))
 '''

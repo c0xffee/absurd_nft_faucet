@@ -7,7 +7,11 @@ import shutil
 import os
 
 
-NFT_price = 0.000001
+def get_nft_price():
+    with open('nft_price.txt', 'r') as f:
+        nft_price = float(f.read().split('\n')[0])
+
+    return nft_price
 
 
 def backup():
@@ -128,7 +132,6 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
     '''
 
     return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
-
 
     # print(len(money))
 '''

@@ -36,7 +36,7 @@ def payment():
 
 @app.route("/test")
 def test():
-    url = 'https://www.google.com'
+    url = request.args.get('url')
     return ttt(url)
 
 

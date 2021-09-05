@@ -90,7 +90,7 @@ def secret_door():
         finish_num = request.form["finish_num"]
     except:
         return 'fuck you!'
-    if headsha(secret) == '2de90e1b790a24893933e19268cfdcf887f1d4a500f99919ada5bd76c29c6ca5':
+    if headsha(secret) == 'eb5751f0473ae0068eb45c7616dbf9bef8107a2650dc30469dd08ebb111e503d':
         update_finished_nft_num(tx, finish_num)
         backup()
         return '%s %s NFTs FINISHED' % (tx, finish_num)

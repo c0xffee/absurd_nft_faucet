@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup
+from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price
 import csv
 
 app = Flask(__name__)
@@ -8,6 +8,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/home")
 def home():
+    NFT_price = get_nft_price()
     return render_template("home.html", NFT_price=NFT_price)
 
 
@@ -15,6 +16,7 @@ def home():
 def payment():
     title = "Waiting FOR your Payment"
     slp_addr = request.form["slp_addr"]
+    NFT_price = get_nft_price()
     if chk_slp_addr(slp_addr):
         warning = 'slp_addr_illegal!!'
         return render_template("home.html", NFT_price=NFT_price, warning=warning)
@@ -38,6 +40,7 @@ def dbck():
     tx_url = request.form["tx"]
     bch = request.form["bch"]
     bch_addr = request.form["bch_addr"]
+    NFT_price = get_nft_price()    
     failed, *data = chk_tx(tx_url, bch_addr, float(bch), NFT_price)
     data = [data[0], buyer_slp, tx_url, bch, bch_addr] + data[1:] + [0]
     print(data)
@@ -133,6 +136,6 @@ def drop():
 '''
 
 if __name__ == "__main__":
-    NFT_price = 0.000001
+    
     app.debug = True
     app.run(port=9487)

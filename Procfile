@@ -1,0 +1,1 @@
+ web: gunicorn trash_nft_app.py:app –log-file -

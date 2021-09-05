@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price
+from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt
 import csv
 
 app = Flask(__name__)
@@ -34,13 +34,19 @@ def payment():
     # return redirect(url_for("payment", title=title, slp=slp_addr, pay=pay_addr))
 
 
+@app.route("/test")
+def test():
+    url = 'https://www.google.com'
+    return ttt(url)
+
+
 @app.route("/dbck", methods=['POST'])
 def dbck():
     buyer_slp = request.form["buyer_slp"]
     tx_url = request.form["tx"]
     bch = request.form["bch"]
     bch_addr = request.form["bch_addr"]
-    NFT_price = get_nft_price()    
+    NFT_price = get_nft_price()
     failed, *data = chk_tx(tx_url, bch_addr, float(bch), NFT_price)
     data = [data[0], buyer_slp, tx_url, bch, bch_addr] + data[1:] + [0]
     print(data)
@@ -136,6 +142,6 @@ def drop():
 '''
 
 if __name__ == "__main__":
-    
+
     app.debug = True
     app.run(port=9487)

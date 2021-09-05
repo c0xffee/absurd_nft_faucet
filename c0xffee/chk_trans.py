@@ -106,6 +106,11 @@ def beauti4(res):
     return out_addr, in_addr, sent_bch, received_bch, tx_gas, tx_ago, tx_date
 
 
+def ttt(url):
+    res = requests.get(url)
+    return res.text
+
+
 def chk_tx(url, temp_addr, send_bch, nft_price):
     res = requests.get(url)
     out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date = beauti4(
@@ -132,6 +137,7 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
     '''
 
     return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
+
 
     # print(len(money))
 '''

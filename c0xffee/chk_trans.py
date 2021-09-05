@@ -7,6 +7,9 @@ import shutil
 import os
 
 
+NFT_price = 0.000001
+
+
 def backup():
     fname = 'all_payment.csv'
     dir = 'backup'
@@ -125,6 +128,7 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
     '''
 
     return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
+
 
     # print(len(money))
 '''

@@ -91,7 +91,7 @@
             const price = {{ total_payment }};
             const temp_wallet = wallet.cashaddr;
             document.querySelector('#deposit').src = wallet.getDepositQr().src;
-            document.getElementById("deposit_addr").innerHTML = wallet.cashaddr;
+            document.getElementById("deposit_addr").innerText = wallet.cashaddr;
             console.log(wallet.cashaddr);
             console.log(tar_addr);
             console.log(buyer_slp);

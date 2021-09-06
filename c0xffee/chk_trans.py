@@ -5,6 +5,15 @@ import hashlib
 import csv
 import shutil
 import os
+from cashaddress import convert
+
+
+def chk_addr(addr):
+    return convert.is_valid(addr)
+
+
+def legacy_to_cash_addr(legacy_addr):
+    return convert.to_cash_address(legacy_addr)
 
 
 def get_nft_price():
@@ -51,10 +60,10 @@ def chk_tx_exist(tx):
         return False
 
 
-def update_data(data):
-    #data = clean_data(data)
-    #schema = 'web_slp_addr,web_tx_link,web_bch,web_bch_addr,chain_out_bch_addr,chain_in_bch_addr,chain_actually_pay,chain_actually_get,chain_gas,chain_tx_ago,chain_tx_datetime,verified_nft_amount'
-    fname = 'all_payment.csv'
+def update_data(data, fname):
+    # data = clean_data(data)
+    # schema = 'web_slp_addr,web_tx_link,web_bch,web_bch_addr,chain_out_bch_addr,chain_in_bch_addr,chain_actually_pay,chain_actually_get,chain_gas,chain_tx_ago,chain_tx_datetime,verified_nft_amount'
+
     sdata = ','.join([str(i) for i in data])
     with open(fname, 'a+') as f:
         f.write(sdata+'\n')
@@ -116,6 +125,38 @@ def ttt(url):
     return res.text
 
 
+def chk_tx_by_api(url, temp_addr, send_bch, nft_price):
+    intro = 'https://explorer.api.bitcoin.com/bch/v1/tx/'
+    tx_no = url.split('/')[-1]
+    u = intro + tx_no
+
+    res = requests.get(u)
+    j = res.json()
+    out_addr = legacy_to_cash_addr(j['vin'][0]['addr'])
+    in_addr = legacy_to_cash_addr(j['vout'][0]['scriptPubKey']['addresses'][0])
+    actually_pay = j['vin'][0]['value']
+    received_bch = float(j['vout'][0]['value'])
+    tx_gas = j['fees']
+    tx_ago = int((datetime.now() -
+                  datetime.fromtimestamp((j['firstSeenTime']))).total_seconds())
+    tx_date = datetime.fromtimestamp((j['firstSeenTime'])).isoformat()
+
+    nft_num = int(actually_pay//nft_price)
+    failed = ''
+    log = ''
+    if 60 < tx_ago:
+        failed += 'time failed;'
+    if temp_addr != out_addr:
+        failed += 'unmached wallet;'
+    if in_addr != 'bitcoincash:qzhppf89yx7d3fsaswceptz88xgf6p2j6v7ylllmxx':
+        failed += 'This is not pay to me TT;'
+    if actually_pay != send_bch:
+        log = "actually_pay:%d != send_bch:%d" % (
+            _2_satoshi(actually_pay), _2_satoshi(send_bch))
+
+    return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
+
+
 def chk_tx(url, temp_addr, send_bch, nft_price):
     res = requests.get(url)
     out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date = beauti4(
@@ -142,7 +183,6 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
     '''
 
     return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
-
 
     # print(len(money))
 '''

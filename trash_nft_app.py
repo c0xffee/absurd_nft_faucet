@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from c0xffee.chk_trans import chk_tx, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt
+from c0xffee.chk_trans import chk_tx, chk_tx_by_api, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt, chk_addr, legacy_to_cash_addr
 import csv
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def payment():
     title = "Waiting FOR your Payment"
     slp_addr = request.form["slp_addr"]
     NFT_price = get_nft_price()
-    if chk_slp_addr(slp_addr):
+    if chk_slp_addr(slp_addr) or not chk_addr(slp_addr):
         warning = 'slp_addr_illegal!!'
         return render_template("home.html", NFT_price=NFT_price, warning=warning)
     amount = request.form["amount"]
@@ -47,31 +47,47 @@ def dbck():
     bch = request.form["bch"]
     bch_addr = request.form["bch_addr"]
     NFT_price = get_nft_price()
-    failed, *data = chk_tx(tx_url, bch_addr, float(bch), NFT_price)
+    failed, *data = chk_tx_by_api(tx_url, bch_addr, float(bch), NFT_price)
     data = [data[0], buyer_slp, tx_url, bch, bch_addr] + data[1:] + [0]
     print(data)
     if chk_tx_exist(data[0]):
         warning = "Paymant already Finished"
         return render_template("home.html", NFT_price=NFT_price, warning=failed)
 
-    update_data(data)
+    if failed != '':
+        data += [failed]
+        fname = 'failed.csv'
+        update_data(data, fname)
+        return render_template("home.html", NFT_price=NFT_price, warning=failed+'contact us with tx_no:'+data[2].split('/')[-1])
+
+    fname = 'all_payment.csv'
+    update_data(data, fname)
     r = data
     schema = ['tx_no', 'web_slp_addr', 'web_tx_link',
               'chain_actually_pay', 'chain_tx_datetime', 'verified_nft_amount', 'finish_num']
     order_data = [r[0], r[1], r[2], r[7], r[11], r[12]]
     leng = len(order_data)
-    if failed:
+    print(failed)
+
+    if failed == '':
         return render_template("successful.html", data=order_data, schema=schema, leng=leng)
-        # buyer_slp + tx_url + bch + bch_addr + str(data)
-    else:
-        return render_template("home.html", NFT_price=NFT_price, warning=failed)
+
+    # buyer_slp + tx_url + bch + bch_addr + str(data)
     # render_template("dbck.html", buyer_slp=buyer_slp, tx=tx, bch=bch, bch_addr=bch_addr)
     # return buyer_slp + tx + bch + bch_addr
 
 
-@app.route("/all_payment")
+@app.route("/all_payments")
 def all_payment():
     fname = 'all_payment.csv'
+    with open(fname, 'r') as f:
+        sth = f.read()
+    return sth
+
+
+@app.route("/failed_payments")
+def failed_payment():
+    fname = 'failed.csv'
     with open(fname, 'r') as f:
         sth = f.read()
     return sth

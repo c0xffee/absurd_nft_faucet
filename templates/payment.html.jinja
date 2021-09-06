@@ -26,6 +26,7 @@
     <p>NFT Amount : {{ amount }}</p>
     <p>NFT Price : {{ nft_price }}</p>
     <p>Total Payment : {{ total_payment }}</p>
+    <h1 id="message" style="color:red"></h1>
     <script>
         var SetMinute = 180;
         function timesup() {
@@ -54,15 +55,20 @@
             document.body.appendChild(form);
             form.submit();
         }
-
-        function pay_suck(buyer_slp, tx, bch, bch_addr) {
-            alert("Payment Successful!!!");
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+        async function pay_suck(buyer_slp, tx, bch, bch_addr) {
+            //alert("Payment Successful!!!");
             //window.location.href = "dbck?buyer_slp=" + buyer_slp + "&tx=" + tx;
             /*$.post("/dbck", {
                 buyer_slp: buyer_slp,
                 tx: tx
             },*/
-            post("dbck", { "buyer_slp": buyer_slp, "tx": tx, "bch": bch, "bch_addr": bch_addr })
+            //post("dbck", { "buyer_slp": buyer_slp, "tx": tx, "bch": bch, "bch_addr": bch_addr })
+            var mes = document.getElementById("message");
+            mes.innerHTML = "Payment Successful!!!";
+            
+            //await sleep(5000)
+            post('dbck', { 'buyer_slp': buyer_slp, 'tx': tx, 'bch': bch, 'bch_addr': bch_addr })
         }
         function Check_Time() {
             SetMinute -= 1;

@@ -4,4 +4,4 @@ requests
 bs4
 beautifulsoup4
 cashaddress
-PIL
+pillow

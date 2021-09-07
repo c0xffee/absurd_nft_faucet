@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask.helpers import make_response
 from c0xffee.chk_trans import chk_tx, chk_tx_by_api, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt, chk_addr, legacy_to_cash_addr
+from c0xffee.trash_img import trouble_maker, top_secret
 import csv
+import os
 
 app = Flask(__name__)
 
@@ -121,6 +124,20 @@ def secret_door():
         return '%s %s NFTs FINISHED' % (tx, finish_num)
     else:
         return str(hash(secret))+secret
+
+
+@app.route("/trash.png")
+def trash_img():
+    dir = '512'
+    new_dir = 'RECYCLE_CAN'
+    idx = trouble_maker()
+    img_bytes = top_secret(idx, dir, new_dir)
+    #fname = new_dir + os.sep + idx + '.png'
+    #img_data = open(fname, 'rb').read()
+    resp = make_response(img_bytes)
+    resp.headers['Content-Type'] = 'image/png'
+
+    return resp
 
 
 '''

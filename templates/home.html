@@ -6,24 +6,29 @@
 </head>
 
 <body>
-    <h1 style="color:red">{{ warning }}</h1>
-    <h1>hello~~</h1>
-    <p>Claiming NFTs Here</p>
-    <p>Price per NFT : {{ NFT_price }}</p>
-    <form method='POST' action="/payment">
+    <div style="margin:0 auto;width:512px">
+        <h1 style="color:red">{{ warning }}</h1>
+        <h1 style="color:rgb(0, 255, 0)"">We are TRASH NFT!!!</h1>
+        <p style=" color:red"> TESTING... not for sell noW</h1>
+        <p style=" color:red"> but you still can pay bch for me noW LOL</h1>
+        <p>Claiming NFTs Here</p>
+        <p>Price per NFT : {{ NFT_price }}</p>
+        <img src='/trash.png'>
+        <form method='POST' action=" /payment">
 
-        <div>
-            <label for="username">Recieved NFTs SLP Address:</label>
-            <input type='text' name='slp_addr' size="60">
-        </div>
-        <div>
-            <label for="username">Amount of NFT you want to claim:</label>
-            <input type='text' name='amount' size="2">
-        </div>
-        <div>
-            <button type='submit'>Start paying BCH</button>
-        </div>
-    </form>
+            <div>
+                <label for="username">Recieved NFTs SLP Address:</label>
+                <input type='text' name='slp_addr' size="60">
+            </div>
+            <div>
+                <label for="username">Amount of NFT you want to claim:</label>
+                <input type='text' name='amount' size="2">
+            </div>
+            <div>
+                <button type='submit'>Start paying BCH</button>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask.helpers import make_response
-from c0xffee.chk_trans import chk_tx, chk_tx_by_api, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt, chk_addr, legacy_to_cash_addr
+from c0xffee.chk_trans import chk_tx, chk_tx_by_api, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt, chk_addr, legacy_to_cash_addr, change_nft_price
 from c0xffee.trash_img import trouble_maker, top_secret
 import csv
 import os
@@ -37,10 +37,12 @@ def payment():
     # return redirect(url_for("payment", title=title, slp=slp_addr, pay=pay_addr))
 
 
+'''
 @app.route("/test")
 def test():
     url = request.args.get('url')
     return ttt(url)
+'''
 
 
 @app.route("/dbck", methods=['POST'])
@@ -109,6 +111,21 @@ def show_me_progress():
     return render_template("show_me_progress.html", data=visible_data)
 
 
+@app.route("/trash.png")
+def trash_img():
+    dir = '512'
+    new_dir = 'RECYCLE_CAN'
+    idx = trouble_maker()
+    img_bytes = top_secret(idx, dir, new_dir)
+    #fname = new_dir + os.sep + idx + '.png'
+    #img_data = open(fname, 'rb').read()
+    resp = make_response(img_bytes)
+    resp.headers['Content-Type'] = 'image/png'
+
+    return resp
+
+
+# ADMIN
 @app.route("/secret_door", methods=['POST'])
 def secret_door():
     try:
@@ -126,18 +143,22 @@ def secret_door():
         return str(hash(secret))+secret
 
 
-@app.route("/trash.png")
-def trash_img():
-    dir = '512'
-    new_dir = 'RECYCLE_CAN'
-    idx = trouble_maker()
-    img_bytes = top_secret(idx, dir, new_dir)
-    #fname = new_dir + os.sep + idx + '.png'
-    #img_data = open(fname, 'rb').read()
-    resp = make_response(img_bytes)
-    resp.headers['Content-Type'] = 'image/png'
+@app.route("/change_price", methods=['POST'])
+def change_price():
+    now_price = get_nft_price()
+    try:
+        secret = 'god_is_dead_rick&morty'
+        secret = request.form["secret"]
+        new_price = request.form["price"]
+    except:
+        return 'fuck you!'
+    if headsha(secret) == 'eb5751f0473ae0068eb45c7616dbf9bef8107a2650dc30469dd08ebb111e503d':
+        if change_nft_price(new_price) == 'failed':
+            return 'CHANGE PRICE ERROR'
 
-    return resp
+        return 'PRICE IS CAHNGED : %f ==> %s ' % (now_price, new_price)
+    else:
+        return str(hash(secret))+secret
 
 
 '''

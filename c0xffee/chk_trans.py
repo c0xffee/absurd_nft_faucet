@@ -82,7 +82,7 @@ def chk_slp_addr(slp_addr):
 
 
 def show_float(flo):
-    return ('%.20f' % round(flo, 10)).rstrip('0')
+    return ('%.7f' % round(flo, 10)).rstrip('0')
 
 
 def _2_satoshi(bch):
@@ -184,7 +184,20 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
 
     return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
 
-    # print(len(money))
+
+def change_nft_price(price):
+    try:
+        float(price)
+    except:
+        return 'failed'
+
+    fname = 'nft_price.txt'
+    with open(fname, 'w') as f:
+        f.write(price)
+
+    return 'successful'
+
+
 '''
 url = "https://blockchair.com/bitcoin-cash/transaction/542efdb29882888dc7b1c6dd9bc2573ab4eb509e4f97930c10894a7f31e1dff1?from=bitcoin.com"
 url = input()

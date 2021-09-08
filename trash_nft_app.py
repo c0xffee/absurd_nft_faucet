@@ -179,7 +179,7 @@ def change_price():
     except:
         return 'fuck you!'
     if headsha(secret) == 'eb5751f0473ae0068eb45c7616dbf9bef8107a2650dc30469dd08ebb111e503d':
-        if change_nft_price(new_price, fname) == 'failed':
+        if change_nft_price(new_price, price_fname) == 'failed':
             return 'CHANGE PRICE ERROR'
 
         return 'PRICE IS CAHNGED : %f ==> %s ' % (now_price, new_price)

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Claiming NFTs Here</title>
+</head>
+
+<body>
+    <div style="margin:0 auto;width:512px">
+        <h1 style="color:red">{{ warning }}</h1>
+        <h1 style="color:rgb(0, 255, 0)"">We are POOP NFT!!! </h1>
+        <p style=" color:red"> we are TESTING payment function </h1>
+        <p style=" color:red"> you can buy some POOP NFT Now </h1>
+        <p style=" color:red"> POOP NFT Exclusive for faucet testing and only public 100 </h1>
+        <p>Claiming NFTs Here</p>
+        <p>Price per NFT : {{ NFT_price }}</p>
+        <img src='/poop.png'>
+        <form method='POST' action=" /payment">
+
+            <div>
+                <label for="username">Recieved NFTs SLP Address:</label>
+                <input type='text' name='slp_addr' size="60">
+            </div>
+            <div>
+                <label for="username">Amount of NFT you want to claim:</label>
+                <input type='text' name='amount' size="2">
+            </div>
+            <div>
+                <button type='submit'>Start paying BCH</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -16,8 +16,8 @@ def legacy_to_cash_addr(legacy_addr):
     return convert.to_cash_address(legacy_addr)
 
 
-def get_nft_price():
-    with open('nft_price.txt', 'r') as f:
+def get_nft_price(fname):
+    with open(fname, 'r') as f:
         nft_price = float(f.read().split('\n')[0])
 
     return nft_price
@@ -185,13 +185,13 @@ def chk_tx(url, temp_addr, send_bch, nft_price):
     return failed, tx_no, out_addr, in_addr, actually_pay, received_bch, tx_gas, tx_ago, tx_date, nft_num
 
 
-def change_nft_price(price):
+def change_nft_price(price, fname):
     try:
         float(price)
     except:
         return 'failed'
 
-    fname = 'nft_price.txt'
+    #fname = 'poop_nft_price.txt'
     with open(fname, 'w') as f:
         f.write(price)
 

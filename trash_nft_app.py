@@ -2,24 +2,35 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask.helpers import make_response
 from c0xffee.chk_trans import chk_tx, chk_tx_by_api, show_float, chk_slp_addr, update_data, chk_tx_exist, headsha, update_finished_nft_num, backup, get_nft_price, ttt, chk_addr, legacy_to_cash_addr, change_nft_price
 from c0xffee.trash_img import trouble_maker, top_secret
+import c0xffee.poop_img
 import csv
 import os
 
 app = Flask(__name__)
 
-
+'''
 @app.route("/")
 @app.route("/home")
 def home():
-    NFT_price = get_nft_price()
+    NFT_price = get_nft_price('nft_price.txt')
     return render_template("home.html", NFT_price=NFT_price)
+'''
+price_fname = 'poop_nft_price.txt'
+
+
+@app.route("/")
+@app.route("/home")
+@app.route("/poop")
+def poop():
+    poop_NFT_price = get_nft_price(price_fname)
+    return render_template("poop.html", NFT_price=poop_NFT_price)
 
 
 @app.route("/payment", methods=['POST'])
 def payment():
     title = "Waiting FOR your Payment"
     slp_addr = request.form["slp_addr"]
-    NFT_price = get_nft_price()
+    NFT_price = get_nft_price(price_fname)
     if chk_slp_addr(slp_addr) or not chk_addr(slp_addr):
         warning = 'slp_addr_illegal!!'
         return render_template("home.html", NFT_price=NFT_price, warning=warning)
@@ -47,11 +58,12 @@ def test():
 
 @app.route("/dbck", methods=['POST'])
 def dbck():
+
     buyer_slp = request.form["buyer_slp"]
     tx_url = request.form["tx"]
     bch = request.form["bch"]
     bch_addr = request.form["bch_addr"]
-    NFT_price = get_nft_price()
+    NFT_price = get_nft_price(price_fname)
     failed, *data = chk_tx_by_api(tx_url, bch_addr, float(bch), NFT_price)
     data = [data[0], buyer_slp, tx_url, bch, bch_addr] + data[1:] + [0]
     print(data)
@@ -113,10 +125,24 @@ def show_me_progress():
 
 @app.route("/trash.png")
 def trash_img():
-    dir = '512'
+    dir = 'trash_layers'
     new_dir = 'RECYCLE_CAN'
     idx = trouble_maker()
     img_bytes = top_secret(idx, dir, new_dir)
+    #fname = new_dir + os.sep + idx + '.png'
+    #img_data = open(fname, 'rb').read()
+    resp = make_response(img_bytes)
+    resp.headers['Content-Type'] = 'image/png'
+
+    return resp
+
+
+@app.route("/poop.png")
+def poop_img():
+    dir = 'poop_layers'
+    new_dir = 'TOILET'
+    idx = c0xffee.poop_img.trouble_maker()
+    img_bytes = c0xffee.poop_img.top_secret(idx, dir, new_dir)
     #fname = new_dir + os.sep + idx + '.png'
     #img_data = open(fname, 'rb').read()
     resp = make_response(img_bytes)
@@ -145,7 +171,7 @@ def secret_door():
 
 @app.route("/change_price", methods=['POST'])
 def change_price():
-    now_price = get_nft_price()
+    now_price = get_nft_price(price_fname)
     try:
         secret = 'god_is_dead_rick&morty'
         secret = request.form["secret"]
@@ -153,7 +179,7 @@ def change_price():
     except:
         return 'fuck you!'
     if headsha(secret) == 'eb5751f0473ae0068eb45c7616dbf9bef8107a2650dc30469dd08ebb111e503d':
-        if change_nft_price(new_price) == 'failed':
+        if change_nft_price(new_price, fname) == 'failed':
             return 'CHANGE PRICE ERROR'
 
         return 'PRICE IS CAHNGED : %f ==> %s ' % (now_price, new_price)

@@ -23,7 +23,7 @@ price_fname = 'poop_nft_price.txt'
 @app.route("/poop")
 def poop():
     poop_NFT_price = get_nft_price(price_fname)
-    return render_template("poop.html", NFT_price=poop_NFT_price)
+    return render_template("home.html", NFT_price=poop_NFT_price)
 
 
 @app.route("/payment", methods=['POST'])

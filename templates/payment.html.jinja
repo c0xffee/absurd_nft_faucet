@@ -12,10 +12,19 @@
 </head>
 
 <body>
+<div style="margin:0 auto;width:600px">
+    <div style="margin:0 auto;width:300px">
+    <div style="margin:0 auto;width:124px">
     <h1>hello~~</h1>
+    </div>
+    <div style="margin:0 auto;width:205px">
     <p>{{ title }}</p>
-    <span id="Check_Txt" style="color:red">時間計數：<span id="Check_i">180秒</span></span>
+    </div>
 
+    <div style="margin:0 auto;width:60px">
+    <span id="Check_Txt" style="color:red"><h1 id="Check_i">180</h1></span>
+    </div>
+    </div>
     <p style="text-align: center;">
         <img src="https://cdn.mainnet.cash/wait.svg" style="width: 15em;" id="deposit">
 
@@ -75,7 +84,7 @@
 
             var Check_i = document.getElementById("Check_i");
 
-            Check_i.innerHTML = SetMinute + "秒";
+            Check_i.innerHTML = SetMinute;
             if (SetMinute <= 0) {
                 timesup()
             }
@@ -136,6 +145,7 @@
 
     </script>
     -->
+    </div>
 </body>
 
 </html>

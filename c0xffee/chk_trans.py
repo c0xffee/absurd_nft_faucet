@@ -141,7 +141,7 @@ def chk_tx_by_api(url, temp_addr, send_bch, nft_price):
                   datetime.fromtimestamp((j['firstSeenTime']))).total_seconds())
     tx_date = datetime.fromtimestamp((j['firstSeenTime'])).isoformat()
 
-    nft_num = int(actually_pay//nft_price)
+    nft_num = int(int(actually_pay*10000000)//int(nft_price*10000000))
     failed = ''
     log = ''
     if 60 < tx_ago:

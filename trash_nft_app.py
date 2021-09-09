@@ -17,21 +17,24 @@ def home():
 '''
 price_fname = 'poop_nft_price.txt'
 
-
+'''
 @app.route("/new_home")
 def new_home():
     poop_NFT_price = get_nft_price(price_fname)
     return render_template("new_home.html", NFT_price=poop_NFT_price)
+'''
 
 
+@app.route("/sold_out")
+def sold_out():
+    return render_template("sold_out.html")
 
 
 @app.route("/")
 @app.route("/home")
 @app.route("/poop")
 def poop():
-    return 'POOP NFT Sold OUT!!!!!!!!'
-
+    return render_template("sold_out.html")
 
 
 '''

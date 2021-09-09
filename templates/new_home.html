@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: "DejaVu Sans Light", sans-serif;
+            font-size: 14pt;
+            margin: 0em 0;
+        }
+
+        div.text-justify {
+            text-align: justify;
+        }
+
+        img.rat-image {
+            border: 3px solid #FFF;
+            border-radius: 10px 10px;
+        }
+
+        ul {
+            list-style-type: circle;
+        }
+
+        div.rats div {
+            display: inline-block;
+        }
+
+        div.app-title {
+            font-size: 5em;
+            color: #555;
+            text-shadow: 2px 2px #DDD;
+            text-align: center;
+            font-family: 'Merienda One', cursive;
+            margin: 0.3em 0em;
+        }
+
+        div.subtitle {
+            font-size: 1em;
+            color: #555;
+            text-shadow: 2px 2px #DDD;
+            text-align: center;
+            font-family: 'Merienda One', cursive;
+            padding-bottom: 2em;
+        }
+
+        div.row {
+            margin-bottom: 3em;
+        }
+
+        div.row.divider {
+            border-bottom: 1px solid #DDD;
+            margin-left: 2em;
+            margin-right: 2em;
+        }
+
+        span.subtitle {
+            font-size: 12pt;
+        }
+
+        /* Animations */
+        @keyframes img-page-open {
+            from {
+                opacity: 0;
+                margin-left: 5em;
+            }
+
+            to {
+                opacity: 1;
+                margin-left: 0em;
+            }
+        }
+
+        img.bch-logo {
+            width: 250px;
+        }
+
+        h1 a {
+            color: #555;
+        }
+
+        a {
+            color: #55F;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        @keyframes app-title-page-open {
+            from {
+                left: -0.3em;
+            }
+
+            to {
+                left: 0px;
+            }
+        }
+
+        body img {
+            animation-name: img-page-open;
+            animation-duration: 1s;
+            animation-timing-function: ease-out;
+        }
+
+        div.app-title {
+            animation-name: app-title-page-open;
+            animation-duration: 0.5s;
+            animation-timing-function: ease-in;
+        }
+
+        div.container.mischief-form {
+            text-align: center;
+        }
+
+        div.container.mischief-form input#slpaddr {
+            width: 400px;
+        }
+
+        div.bar {
+            padding: 1em 0;
+            text-align: center;
+            background-color: #FAFAFA;
+            box-shadow: 2px 2px #DDD;
+        }
+
+        div.menu a {
+            margin: 0 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 menu bar">
+                <a href="/">Home</a>
+                <a href="/show_me_progress">All the ORDERS</a>
+                <!--a href="/index/credits">Credits</a-->
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-4 text-center text-justify">
+                <p>
+                    <img class="rat-image img-fluid" src="/poop.png">
+                </p>
+            </div>
+            <div class="col-lg-8">
+                <!--
+                <p>
+                    All 10k $RATs were given away, the faucet is now closed. Thanks for the overwhelming support, and I
+                    hope you all enjoy collecting.<br>
+                    I have an announcement regarding <a href="/rat/id/1">Nexus [#1]</a>, <a href="/rat/id/2">Orion
+                        [#2]</a> and <a href="/rat/id/3">Jupiter [#3]</a>. They have fled to addresses I no longer
+                    control, but are findable to treasure hunters. Some rats may point in the right direction. Good
+                    luck!
+                </p> -->
+                <h1 style="color:red">{{ warning }}</h1>
+                <h1 style="color:rgb(0, 255, 0)">We are POOP NFT!!! </h1>
+                <p style=" color:red"> we are TESTING payment function </p>
+                <p style=" color:red"> you can buy some POOP NFT Now </p>
+                <p style=" color:red"> POOP NFT Exclusive for faucet testing and only public 100 </p>
+                <p>Claiming NFTs Here</p>
+                <p>Price per NFT : {{ NFT_price }}</p>
+                <form method='POST' action=" /payment">
+
+                    <div>
+                        <label for="username">Recieved NFTs SLP Address:</label>
+                        <input type='text' name='slp_addr' size="60">
+                    </div>
+                    <div>
+                        <label for="username">Amount of NFT you want to claim:</label>
+                        <input type='text' name='amount' size="2">
+                    </div>
+                    <div style="float:right">
+                        <button type='submit'>Start paying BCH</button>
+                    </div>
+                </form>
+
+                <!--
+                <br>
+                <p><a href="https://t.me/ratmischief" target="_blank">Join our Telegram group!</a>
+                </p>
+                <p><a href="https://noise.cash/u/Messy" target="_blank">Check out my Noise page for new NFT info</a>
+                </p>-->
+            </div>
+            <div class="col-lg-12">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12 app-title">
+                <h1> Last POOP seen in TOILET </h1>
+            </div>
+            <div class="row rats">
+                <div class="col-lg-2 col-md-3 col-sm-6 text-center">
+                    <a href="/rat/id/05db41f573a6814d7ba95dce0fa69e442370db9a075db45703855814f80f0beb">
+                        <img src="https://cryptor.at/128/05db41f573a6814d7ba95dce0fa69e442370db9a075db45703855814f80f0beb.png"
+                            class="rat-image"><br>
+                        <span style="height:60px;display:block;">Zac [#521]</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 text-center">
+                    <a href="/rat/id/5fa973a3d12de9842bbe8f526f9c3949de9a096708dccf5d72ce6d4af9471876">
+                        <img src="https://cryptor.at/128/5fa973a3d12de9842bbe8f526f9c3949de9a096708dccf5d72ce6d4af9471876.png"
+                            class="rat-image"><br>
+                        <span style="height:60px;display:block;">Charl [#5980]</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 text-center">
+                    <a href="/rat/id/1971f81706050db23c5bb12f5fcb7e801ba3ee139d0f2277b788252dddafd53a">
+                        <img src="https://cryptor.at/128/1971f81706050db23c5bb12f5fcb7e801ba3ee139d0f2277b788252dddafd53a.png"
+                            class="rat-image"><br>
+                        <span style="height:60px;display:block;">Chewey [#2908]</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 text-center">
+                    <a href="/rat/id/2f2ec53d900ecbf8fca46cd015c0a193d910448bc8ccb74f474ade984a13c8d8">
+                        <img src="https://cryptor.at/128/2f2ec53d900ecbf8fca46cd015c0a193d910448bc8ccb74f474ade984a13c8d8.png"
+                            class="rat-image"><br>
+                        <span style="height:60px;display:block;">Ears [#532]</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 text-center">
+                    <a href="/rat/id/056f97199ce69f32022f376e9381a976eef72c717b967952b61102fa4323009e">
+                        <img src="https://cryptor.at/128/056f97199ce69f32022f376e9381a976eef72c717b967952b61102fa4323009e.png"
+                            class="rat-image"><br>
+                        <span style="height:60px;display:block;">Abby [#9731]</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 text-center">
+                    <a href="/rat/id/96ee6f91dc8fa24583e85540ee4f04617d528fcfa6a93bfdf31e22af8be58130">
+                        <img src="https://cryptor.at/128/96ee6f91dc8fa24583e85540ee4f04617d528fcfa6a93bfdf31e22af8be58130.png"
+                            class="rat-image"><br>
+                        <span style="height:60px;display:block;">Pitch [#1552]</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 app-title">
+                <h2>More information</h2>
+            </div>
+            <div class="col-md-12 text-justify">
+                <p>$RAT is an art project by <a target="_blank" href="https://shadowkite.github.io">Shadowkite</a>,
+                    creating a fun collectible
+                    based on the BCH blockchain and the Simpleledger protocol. All rat images are generated based on the
+                    token ID. They are all unique and will have their own name! Some will have rare qualities.<br>
+                    In total only 10,000 rats will be minted.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
